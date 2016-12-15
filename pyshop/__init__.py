@@ -13,7 +13,7 @@ from .models import create_engine
 from .helpers.i18n import locale_negotiator
 from .helpers.authentication import RouteSwitchAuthPolicy
 
-__version__ = '1.2.2'
+__version__ = '1.2.3'
 
 
 def main(global_config, **settings):
@@ -36,7 +36,7 @@ def main(global_config, **settings):
 
     config = Configurator(settings=settings,
                           root_factory=RootFactory,
-                          route_prefix = route_prefix,
+                          route_prefix=route_prefix,
                           locale_negotiator=locale_negotiator,
                           authentication_policy=authn_policy,
                           authorization_policy=authz_policy)

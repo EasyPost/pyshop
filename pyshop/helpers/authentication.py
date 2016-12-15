@@ -25,7 +25,7 @@ class AuthBasicAuthenticationPolicy(CallbackAuthenticationPolicy):
         auth = request.environ.get('HTTP_AUTHORIZATION')
         try:
             authmeth, auth = auth.split(' ', 1)
-        except AttributeError as ValueError:  # not enough values to unpack
+        except AttributeError:  # not enough values to unpack
             return None
 
         if authmeth.lower() != 'basic':
@@ -47,7 +47,10 @@ class AuthBasicAuthenticationPolicy(CallbackAuthenticationPolicy):
 
         if User.by_credentials(DBSession(), login, password):
             return login
-
+        
+        if User.by_ldap_credentials(DBSession(), login, password,request.registry.settings):
+            return login
+        
         return None
 
     def unauthenticated_userid(self, request):
