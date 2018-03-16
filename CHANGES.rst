@@ -1,6 +1,19 @@
 Changelist
 ==========
 
+1.2.5 - Released on 2017-06-03
+------------------------------
+
+- Fix packaging
+
+    version used to build 1.2.4 was too old and build a broken package.
+
+1.2.4 - Released on 2017-05-30
+------------------------------
+
+- Fix for Python 3
+- Update README / install process for pyramid>=1.8 default to python 3
+
 1.2.3 - Released on 2016-06-22
 ------------------------------
 
