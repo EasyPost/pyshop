@@ -26,7 +26,7 @@ requires = [
     'pyramid_tm',
     'zope.sqlalchemy',
 
-    'cryptacular',
+    'bcrypt',
     'requests',
     'docutils',
     'setuptools',            # compare package version
