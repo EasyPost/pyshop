@@ -167,7 +167,7 @@ class User(Base):
         return self._password
 
     def _set_password(self, password):
-        self._password = unicode(bcrypt.hashpw(password, bcrypt.gensalt(12)))
+        self._password = unicode(bcrypt.hashpw(password.encode('utf8'), bcrypt.gensalt(12)))
 
     password = property(_get_password, _set_password)
     password = synonym('_password', descriptor=password)
@@ -220,7 +220,7 @@ class User(Base):
         user = cls.by_login(session, login, local=True)
         if not user:
             return None
-        if bcrypt.checkpw(user.password, password):
+        if bcrypt.checkpw(user.password, password.encode('utf8')):
             return user
 
     @classmethod
