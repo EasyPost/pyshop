@@ -220,7 +220,7 @@ class User(Base):
         user = cls.by_login(session, login, local=True)
         if not user:
             return None
-        if bcrypt.checkpw(user.password, password.encode('utf8')):
+        if bcrypt.checkpw(user.password, bcrypt.hashpw(password.encode('utf8'), bcrypt.gensalt(12)):
             return user
 
     @classmethod
