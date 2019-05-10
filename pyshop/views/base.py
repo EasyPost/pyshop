@@ -43,6 +43,8 @@ class ViewBase(object):
         try:
             log.info('dispatch view %s', self.__class__.__name__)
             response = self.render()
+            if 'headers' in response:
+                response.headers['X-Pyshop-User'] = self.login
             self.update_response(response)
             # if isinstance(response, dict):
             #     log.info("rendering template with context %r", dict)
