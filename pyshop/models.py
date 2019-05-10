@@ -166,8 +166,13 @@ class User(Base):
     def _get_password(self):
         return self._password
 
+    @classmethod
+    def hash_password(cls, pw):
+        return bcrypt.hashpw(pw.encode('utf8'), bcrypt.gensalt(12))
+
     def _set_password(self, password):
-        self._password = unicode(bcrypt.hashpw(password.encode('utf8'), bcrypt.gensalt(12)))
+        # we want to store this in the database as unicode
+        self._password = unicode(hashpw(password))
 
     password = property(_get_password, _set_password)
     password = synonym('_password', descriptor=password)
@@ -220,7 +225,7 @@ class User(Base):
         user = cls.by_login(session, login, local=True)
         if not user:
             return None
-        if bcrypt.checkpw(user.password, bcrypt.hashpw(password.encode('utf8'), bcrypt.gensalt(12)):
+        if bcrypt.checkpw(password.encode('utf8'), user.password.encode('utf8')):
             return user
 
     @classmethod
