@@ -32,6 +32,8 @@ class ViewBase(object):
         else:
             self.login = u'anonymous'
             self.user = None
+        if hasattr(self.request, 'response') and hasattr(self.request.response, 'headers'):
+            self.request.response.headers['X-Pyshop-User'] = str(self.login)
 
     def update_response(self, response):
         pass
@@ -43,8 +45,6 @@ class ViewBase(object):
         try:
             log.info('dispatch view %s', self.__class__.__name__)
             response = self.render()
-            if 'headers' in response:
-                response.headers['X-Pyshop-User'] = self.login
             self.update_response(response)
             # if isinstance(response, dict):
             #     log.info("rendering template with context %r", dict)
