@@ -16,7 +16,7 @@ except ImportError:
     ldap = None
 from pyramid.settings import asbool
 
-import cryptacular.bcrypt
+import bcrypt
 import transaction
 from pkg_resources import parse_version
 
@@ -35,7 +35,6 @@ from .helpers.sqla import (Database, SessionFactory, ModelError,
 
 
 log = logging.getLogger(__name__)
-crypt = cryptacular.bcrypt.BCRYPTPasswordManager()
 
 re_email = re.compile(r'^[^@]+@[a-z0-9]+[-.a-z0-9]+\.[a-z]+$', re.I)
 
@@ -167,8 +166,13 @@ class User(Base):
     def _get_password(self):
         return self._password
 
+    @classmethod
+    def hash_password(cls, pw):
+        return bcrypt.hashpw(pw.encode('utf8'), bcrypt.gensalt(12))
+
     def _set_password(self, password):
-        self._password = unicode(crypt.encode(password))
+        # we want to store this in the database as unicode
+        self._password = unicode(hashpw(password))
 
     password = property(_get_password, _set_password)
     password = synonym('_password', descriptor=password)
@@ -221,7 +225,7 @@ class User(Base):
         user = cls.by_login(session, login, local=True)
         if not user:
             return None
-        if crypt.check(user.password, password):
+        if bcrypt.checkpw(password.encode('utf8'), user.password.encode('utf8')):
             return user
 
     @classmethod

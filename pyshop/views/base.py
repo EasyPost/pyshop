@@ -32,6 +32,8 @@ class ViewBase(object):
         else:
             self.login = u'anonymous'
             self.user = None
+        if hasattr(self.request, 'response') and hasattr(self.request.response, 'headers'):
+            self.request.response.headers['X-Pyshop-User'] = str(self.login)
 
     def update_response(self, response):
         pass
