@@ -172,7 +172,7 @@ class User(Base):
 
     def _set_password(self, password):
         # we want to store this in the database as unicode
-        self._password = unicode(hashpw(password))
+        self._password = unicode(self.hash_password(password))
 
     password = property(_get_password, _set_password)
     password = synonym('_password', descriptor=password)
