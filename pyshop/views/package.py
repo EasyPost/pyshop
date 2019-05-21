@@ -90,7 +90,6 @@ class Show(View):
             self.login in owners.keys() or
             any(g.name == 'admin' for g in self.user.groups)
         )
-        can_edit_role = self.login in owners.keys() and package.local
 
         if 'form.add_role' in self.request.params:
 
