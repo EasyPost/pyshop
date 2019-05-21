@@ -86,6 +86,10 @@ class Show(View):
             self.session.add(package)
 
         owners = dict((usr.login, usr) for usr in package.owners)
+        can_edit_role = package.local and (
+            self.login in owners.keys() or
+            any(g.name == 'admin' for g in self.user.groups)
+        )
         can_edit_role = self.login in owners.keys() and package.local
 
         if 'form.add_role' in self.request.params:
