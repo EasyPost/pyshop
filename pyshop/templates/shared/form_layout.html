@@ -1,7 +1,7 @@
 {% extends "/shared/layout.html" %}
 
 {% block main %}
-<form class="form-horizontal">
+<form class="form-horizontal" {% block formmethod %}{%endblock%}>
    <p>
       {% block form %}
       {% endblock %}

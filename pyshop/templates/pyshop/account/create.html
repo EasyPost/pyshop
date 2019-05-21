@@ -7,6 +7,8 @@
     <h2>{% trans %}New Account{% endtrans %}</h2>
 {% endblock %}
 
+{% block formmethod %}method="POST"{% endblock %}
+
 {% block form %}
 
   <input type="hidden" name="user_id" value="{{user.id|default('', true)}}"/>
