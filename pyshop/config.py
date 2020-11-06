@@ -70,6 +70,9 @@ def includeme(config):
     config.add_view(u'pyshop.views.Index',
                     route_name=u'index',
                     permission=u'user_view')
+    config.add_route(u'healthcheck', u'/v1/ok')
+    config.add_view(u'pyshop.views.Health',
+                    route_name=u'healthcheck')
 
     # Archive downloads
     config.add_route(u'show_external_release_file',

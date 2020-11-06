@@ -2,7 +2,7 @@
 """
 PyShop Views
 """
-from .base import RedirectView
+from .base import View, RedirectView
 
 
 class Index(RedirectView):
@@ -10,3 +10,8 @@ class Index(RedirectView):
     PyShop index view.
     """
     redirect_route = u'list_package'
+
+
+class Health(View):
+    def render(self):
+        return {'ok': True}
