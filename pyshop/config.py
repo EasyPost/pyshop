@@ -72,7 +72,8 @@ def includeme(config):
                     permission=u'user_view')
     config.add_route(u'healthcheck', u'/v1/ok')
     config.add_view(u'pyshop.views.Health',
-                    route_name=u'healthcheck')
+                    route_name=u'healthcheck',
+                    renderer='json')
 
     # Archive downloads
     config.add_route(u'show_external_release_file',
